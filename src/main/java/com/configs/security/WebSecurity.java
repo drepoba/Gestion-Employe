@@ -33,6 +33,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/user/sign-up", "/api/user/sign-in").permitAll()
+                .antMatchers("/swagger-ui.html", "/v2/api-docs", "/webjars/**", "/swagger-resources/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()
