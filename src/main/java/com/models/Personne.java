@@ -33,4 +33,12 @@ public class Personne {
     public void setPosteActuel(String posteActuel) {
         this.posteActuel = posteActuel;
     }
+
+    public PersonneEntreprise getPersonneEntreprise() {
+        return personneEntreprise;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

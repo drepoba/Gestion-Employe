@@ -2,6 +2,8 @@ package com.controllers;
 import com.models.Personne;
 import com.models.PersonneEntreprise;
 import com.repositories.PersonneEntrepriseRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,11 +13,14 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/personneentreprise")
+@Api(tags = "PersonnesEntreprise", description = "API pour gérer les personnes par entreprises")
 public class PersonneEntrepriseController {
     @Autowired
     private PersonneEntrepriseRepository personneEntrepriseRepository;
 
     @PostMapping("/add-employment")
+    @ApiOperation("Sauvegarde les personnes en entreprise")
     public ResponseEntity<String> addEmployment(@RequestBody PersonneEntreprise personneEntreprise) {
         try {
             personneEntrepriseRepository.save(personneEntreprise);

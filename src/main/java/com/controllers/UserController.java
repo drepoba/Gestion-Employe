@@ -8,6 +8,7 @@ import com.models.Role;
 import com.models.User;
 import com.repositories.RoleRepository;
 import com.repositories.UserRepository;
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Arrays;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/api/user")
+@Api(tags = "Utilisateur", description = "API pour gérer les utilisateur")
 public class UserController {
 
 

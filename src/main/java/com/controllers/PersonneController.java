@@ -3,18 +3,18 @@ package com.controllers;
 import com.models.Personne;
 import com.models.PersonneEntreprise;
 import com.repositories.PersonneRepository;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/personnes")
+@Api(tags = "Personnes", description = "API pour gérer les personnes")
 public class PersonneController {
 
     @Autowired
