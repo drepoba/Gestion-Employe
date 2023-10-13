@@ -2,6 +2,7 @@ package com.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
@@ -13,10 +14,30 @@ import java.time.LocalDate;
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+
 public class Entreprise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String companyName;
+    @Getter
+    private String companyname;
+
+    public Entreprise(Long id, String companyname) {
+        this.id = id;
+        this.companyname = companyname;
+    }
+
+    public Entreprise(Long id) {
+        this.id = id;
+    }
+
+    public Entreprise() {
+    }
+
+    public void setCompanyname(String companyname) {
+        this.companyname = companyname;
+    }
+
+
+
 }

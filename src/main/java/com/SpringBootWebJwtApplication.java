@@ -63,12 +63,12 @@ public class SpringBootWebJwtApplication implements CommandLineRunner {
         )));
         userRepository.save(new User(
                 "admin",
-                myBCryptPasswordEncoder.encode("0000"),
+                myBCryptPasswordEncoder.encode("admin"),
                 Arrays.asList(ROLE_ADMIN, ROLE_USER)
         ));
         userRepository.save(new User(
                 "user",
-                myBCryptPasswordEncoder.encode("0000"),
+                myBCryptPasswordEncoder.encode("admin"),
                 Arrays.asList(ROLE_USER)
         ));
 

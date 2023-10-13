@@ -19,7 +19,7 @@ public class PersonneController {
 
     @Autowired
     private PersonneRepository personneRepository;
-    @PostMapping("/api/persons")
+    @PostMapping("/add")
     public ResponseEntity<String> addPerson(@RequestBody Personne person) {
         LocalDate currentDate = LocalDate.now();
         int age = Period.between(person.getDateOfBirth(), currentDate).getYears();
