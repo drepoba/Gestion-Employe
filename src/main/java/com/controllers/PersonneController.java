@@ -2,7 +2,9 @@ package com.controllers;
 
 import com.models.Personne;
 import com.models.PersonneEntreprise;
+import com.models.User;
 import com.repositories.PersonneRepository;
+import com.repositories.UserRepository;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,8 @@ public class PersonneController {
 
     @Autowired
     private PersonneRepository personneRepository;
+    @Autowired
+    private UserRepository userRepository;
     @PostMapping("/add")
     public ResponseEntity<String> addPerson(@RequestBody Personne person) {
         LocalDate currentDate = LocalDate.now();
@@ -33,12 +37,17 @@ public class PersonneController {
         return ResponseEntity.ok("Personne enregistrée avec succès.");
     }
 
+    @GetMapping("/list-personnes")
+    public ResponseEntity<List<Personne>> listPersons() {
+        return ResponseEntity.ok(personneRepository.findAll());
+    }
+
     @GetMapping("/all-persons-emplois")
     public List<Personne> getAllPersons() {
         // Récupérez toutes les personnes enregistrées par ordre alphabétique
         List<Personne> personnes = personneRepository.findAllByOrderByFirstNameAscLastNameAsc();
 
-        for (Personne personne : personnes) {
+       /* for (Personne personne : personnes) {
             // Récupérez l'emploi actuel (si existant)
             PersonneEntreprise employment = personne.getPersonneEntreprise();
 
@@ -46,8 +55,7 @@ public class PersonneController {
                 String posteActuel = employment.getPosteOccupe();
                 personne.setPosteActuel(posteActuel);
             }
-        }
-
+        }*/
         return personnes;
     }
 

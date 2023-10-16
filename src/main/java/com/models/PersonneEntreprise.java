@@ -32,9 +32,9 @@ public class PersonneEntreprise {
     @OneToOne
     @JoinColumn(name = "personneId")
     private  Personne personne;
-
+/*
     @OneToOne(mappedBy = "personne")
-    private PersonneEntreprise personneEntreprise;
+    private PersonneEntreprise personneEntreprise;*/
 
     public String getPosteOccupe() {
         return posteOccupe;

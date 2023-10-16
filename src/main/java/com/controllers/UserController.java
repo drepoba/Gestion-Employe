@@ -1,5 +1,8 @@
 package com.controllers;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.repositories.PersonneRepository;
+import org.springframework.http.MediaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.configs.security.JwtOutils;
 import com.configs.security.MyBCryptPasswordEncoder;
 import com.models.*;
@@ -14,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Column;
+import java.time.LocalDate;
 import java.util.Arrays;
 
 @RestController
@@ -26,6 +31,9 @@ public class UserController {
     private MyBCryptPasswordEncoder myBCryptPasswordEncoder;
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PersonneRepository personneRepository;
     @Autowired
     private JwtOutils jwtOutils;
 
@@ -56,24 +64,35 @@ public class UserController {
     }
 
     @PostMapping("/sign-up")
-    public ResponseEntity<String> signUp(@RequestBody RequestPersonne personne) {
-
-        if(personne==null){
-            logger.info("[sign-up] => No information provided" );
+    public ResponseEntity<Object> signUp(@RequestBody Personne personne) throws JsonProcessingException {
+        if (personne == null) {
+            logger.info("[sign-up] => No information provided");
             return ResponseEntity.badRequest().body("No information provided");
         }
-        User user = userRepository.findByUsername(personne.user.getUsername());
-        if(user!=null){
-            logger.info("[sign-up] => Username exist" );
-            return ResponseEntity.badRequest().body("Username exist");
+        User user = userRepository.findByUsername(personne.getUser().getUsername());
+        if (user != null) {
+            logger.info("[sign-up] => Username exists");
+            return ResponseEntity.badRequest().body("Username exists");
         }
-        logger.info("[sign-up] => save" );
-        userRepository.save(new User(
-                personne.user.getUsername(),
-                myBCryptPasswordEncoder.encode(personne.user.getPassword()),
+
+        logger.info("[sign-up] => save");
+        User savedUser = userRepository.save(new User(
+                personne.getUser().getUsername(),
+                myBCryptPasswordEncoder.encode(personne.getUser().getPassword()),
                 Arrays.asList(roleRepository.findByName("ROLE_USER"))
         ));
-        return new ResponseEntity<>("saved person",HttpStatus.OK);
+
+        personne.setUser(savedUser);
+        personneRepository.save(personne);
+
+
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonResponse = objectMapper.writeValueAsString(savedUser);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(jsonResponse);
     }
 
 

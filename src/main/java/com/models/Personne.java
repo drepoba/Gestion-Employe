@@ -10,9 +10,8 @@ import java.util.Collection;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Personne extends User{
+public class Personne {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -23,12 +22,54 @@ public class Personne extends User{
     @Column(nullable = true)
     private String posteActuel;
 
+    @OneToOne
+    @JoinColumn(name = "userId")
+    private User user;
 
+    public Personne(Personne personne) {
+    }
+    public Personne() {
+    }
 
+    public long getId() {
+        return id;
+    }
 
+    public void setId(long id) {
+        this.id = id;
+    }
 
-    @OneToOne(mappedBy = "personne")
-    private PersonneEntreprise personneEntreprise;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getPosteActuel() {
+        return posteActuel;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     // Ajoutez le getter pour la date de naissance
     public LocalDate getDateOfBirth() {
@@ -38,14 +79,9 @@ public class Personne extends User{
     public void setPosteActuel(String posteActuel) {
         this.posteActuel = posteActuel;
     }
-
-    public PersonneEntreprise getPersonneEntreprise() {
-        return personneEntreprise;
-    }
+    
 
     public void setId(Long id) {
         this.id = id;
     }
-
-
 }
